@@ -43,7 +43,7 @@ int parse_args(int, char**);
 void kill_pid(pid_t, unsigned int);
 void daemonize();
 void mainloop_sigtermhandler();
-int mainloop();
+void mainloop();
 void supervisor_sigchldhandler();
 void supervisor_sigtermhandler();
 void createpid(char*, pid_t);
@@ -212,7 +212,7 @@ void mainloop_sigtermhandler() {
 	exit(1);
 }
 
-int mainloop() {
+void mainloop() {
 	createpid(config.daemonpidfile, getpid());
 	
 	signal(SIGTERM, mainloop_sigtermhandler);
@@ -292,7 +292,7 @@ int supervisor() {
 			if (config.syslog) syslog(LOG_NOTICE, "Started %s (PID %d). Will wait %d seconds before killing it.", config.child, state.pid_child, config.kill_after);
 		}
 		else {
-			if (config.syslog) syslog(LOG_NOTICE, "Started %s (PID %d).", config.child, state.pid_child, config.kill_after);
+			if (config.syslog) syslog(LOG_NOTICE, "Started %s (PID %d).", config.child, state.pid_child);
 		}
 	}
 	

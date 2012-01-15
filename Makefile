@@ -1,20 +1,16 @@
 SHELL	= /bin/sh
 
-DIET	= diet -Os
-CC	= $(DIET) gcc
-CFLAGS	= -pipe -Os -Wall -W
-LDFLAGS	= -s 
+CC	= cc
+CFLAGS	= -pipe -Os -Wall -W -I/usr/local/include
+LDFLAGS	= -s -L/usr/local/lib
 LIBS	= -lowfat
 
 ALL = minicron
 
 all: $(ALL)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^
-	
 minicron: minicron.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o ${.TARGET} ${.ALLSRC} $(LIBS)
 
 clean:
 	rm -f a.out *.o *~ $(ALL) *.tar.bz2 *.tar.gz Z*
